@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Nom d'utilisateur :</label>
+                <input type="text" name="username" id="username" placeholder="Entrez votre nom d'utilisateur" required
+                    autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe :</label>
+                <input type="password" name="password" id="password" placeholder="Entrez votre mot de passe" required>
+            </div>
+            <button type="submit" class="submit-btn">Connexion</button>
+        </form>
+        <p>Pas encore de compte ? <a href="/signup">Inscrivez-vous</a></p>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                localStorage.setItem('token', data.token);
+                window.location.href = data.redirectUrl;
+            } else {
+                alert('Login failed');
+            }
+        });
+    </script>
+</body>
+
+</html>
