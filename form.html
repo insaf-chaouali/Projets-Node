@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Compte</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h2>Créer / Modifier un Compte Professionnel</h2>
+    <form id="professionalForm">
+        <input type="text" id="firstName" placeholder="Prénom" required>
+        <input type="text" id="lastName" placeholder="Nom" required>
+        <input type="text" id="address" placeholder="Adresse" required>
+        <select id="title">
+            <option value="Médecin">Médecin</option>
+            <option value="Comptable">Comptable</option>
+            <option value="Avocat">Avocat</option>
+        </select>
+        <input type="text" id="specialty" placeholder="Spécialité" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Mot de passe" required>
+        <button type="submit">Enregistrer</button>
+    </form>
+
+    <script src="js/form.js"></script>
+</body>
+</html>
