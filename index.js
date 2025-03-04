@@ -20,18 +20,23 @@ const jwtSecret = 'your_jwt_secret_key';  // Clé secrète pour générer et vé
 
 // Route de la page d'accueil
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+    res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 
 // Route pour la page Client
 app.get("/Client", (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Client.html'));
 });
-
+// Route pour la page Professionnel
+app.get("/Professionnel", (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'professionnel.html'));
+});
 app.get("/Profile", (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'profile.html'));
 });
-
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
 // Route pour la page d'inscription
 app.get("/signup", (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'signup.html'));
@@ -79,7 +84,7 @@ app.post("/login", async (req, res) => {
         } else {
             const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
             if (isPasswordMatch) {
-                const token = jwt.sign({ id: check._id, role: check.role }, jwtSecret, { expiresIn: '5d' });
+                const token = jwt.sign({ id: check._id, role: check.role }, jwtSecret, { expiresIn: '10d' });
                 const decodedToken = jwt.verify(token, jwtSecret);
                 const userRole = decodedToken.role;
                 let redirectUrl;
@@ -144,10 +149,35 @@ app.get('/admin', isAuthenticated, hasRole('admin'), (req, res) => {
 app.get('/client', isAuthenticated, hasRole('client'), (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'client.html'));
 });
+app.get('/search-professionals', async (req, res) => {
+    const { job } = req.query;
 
-// Route protégée pour un professionnel
-app.get('/professionnel', isAuthenticated, hasRole('professionnel'), (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'professionnel.html'));
+    // Vérifier que le critère de recherche (job) est fourni
+    if (!job) {
+        return res.status(400).json({ message: 'Veuillez fournir un métier pour la recherche.' });
+    }
+
+    // Construire la requête MongoDB
+    const query = { 
+        role: 'professionnel', // Filtrer par rôle "professionnel"
+        job: { $regex: job, $options: 'i' } // Filtrer par métier (insensible à la casse)
+    };
+
+    try {
+        // Exécuter la requête
+        const professionals = await collection.find(query);
+
+        // Vérifier si des résultats ont été trouvés
+        if (professionals.length === 0) {
+            return res.status(404).json({ message: 'Aucun professionnel trouvé pour ce métier.' });
+        }
+
+        // Renvoyer les résultats
+        res.json(professionals);
+    } catch (error) {
+        console.error('Erreur lors de la recherche :', error);
+        res.status(500).json({ message: 'Erreur lors de la recherche', error });
+    }
 });
 
 const port = process.env.PORT || 5000;

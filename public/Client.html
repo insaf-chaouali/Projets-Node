@@ -3,104 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Réservation de Rendez-vous</title>
+    <title>Page Client</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-        body {
-            background-image: url('https://via.placeholder.com/1920x1080'); /* Remplacez par votre image */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: white;
-        }
-
-        .navbar {
-            background-color: rgba(0, 123, 255, 0.8); /* Bleu semi-transparent */
-        }
-
-        .hero-section {
-            height: 70vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.5); /* Fond sombre semi-transparent */
-        }
-
-        .hero-section h1 {
-            font-size: 3.5rem;
-            font-weight: bold;
-        }
-
-        .hero-section p {
-            font-size: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .search-box {
-            max-width: 600px;
-            margin: 2rem auto;
-            background-color: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent */
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        .search-box button {
-            width: 100%;
-            margin-top: 1rem;
-            padding: 0.75rem;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-        }
-
-        .search-box button:hover {
-            background-color: #0056b3;
-        }
-
-        .results-section {
-            background-color: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent */
-            padding: 2rem;
-            border-radius: 10px;
-            margin: 2rem auto;
-            max-width: 800px;
-            color: #333;
-        }
-
-        .results-section table {
-            width: 100%;
-        }
-
-        .results-section th, .results-section td {
-            padding: 0.75rem;
-            text-align: left;
-        }
-
-        .results-section th {
-            background-color: #007bff;
-            color: white;
-        }
-
-        .results-section tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
+   <link rel="stylesheet" href="css/client.css">
 </head>
 <body>
     <!-- Barre de navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="#">Rendez-vous</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -115,15 +24,17 @@
         </div>
     </nav>
 
-    <!-- Section Hero avec texte et recherche -->
-    <div class="hero-section">
-        <div>
-            <h1>Prenez rendez-vous en ligne</h1>
-            <p>Trouvez le professionnel qu'il vous faut en quelques clics.</p>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Rechercher un professionnel (ex: Médecin, Avocat)">
-                <button onclick="rechercherProfessionnel()">Rechercher</button>
-            </div>
+    <!-- Section de recherche -->
+    <div class="search-box">
+        <h2>Rechercher un professionnel</h2>
+        <input type="text" id="searchInput" placeholder="Rechercher un professionnel (ex: Médecin, Avocat)">
+        <button onclick="rechercherProfessionnel()" class="btn btn-primary mt-2">Rechercher</button>
+    </div>
+
+    <!-- Spinner de chargement -->
+    <div id="loadingSpinner" class="d-none">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
         </div>
     </div>
 
@@ -132,7 +43,12 @@
         <h3>Résultats de la recherche</h3>
         <table>
             <thead>
-                <tr><th>Nom</th><th>Métier</th><th>Action</th></tr>
+                <tr>
+                    <th>Nom</th>
+                    <th>Métier</th>
+                    <th>Localisation</th>
+                    <th>Action</th>
+                </tr>
             </thead>
             <tbody id="resultsBody">
                 <!-- Les résultats seront injectés ici par JavaScript -->
@@ -140,57 +56,52 @@
         </table>
     </div>
 
-    <!-- Section Mes Rendez-vous -->
-    <div class="results-section d-none" id="mesrendezvous">
-        <h3>Mes Rendez-vous</h3>
-        <table>
-            <thead>
-                <tr><th>Professionnel</th><th>Date</th><th>Heure</th><th>Action</th></tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Dr. Dupont</td>
-                    <td>2023-10-15</td>
-                    <td>10:00</td>
-                    <td><button class="btn btn-danger" onclick="annulerRendezvous('Dr. Dupont', '2023-10-15', '10:00')">Annuler</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
     <script>
-        // Données de test
-        const professionnels = [
-            { nom: "Dr. Dupont", metier: "Médecin - Cardiologue" },
-            { nom: "Dr. Martin", metier: "Médecin - Dermatologue" },
-            { nom: "Me. Leblanc", metier: "Avocat - Droit Pénal" },
-            { nom: "Me. Durand", metier: "Avocat - Droit Civil" }
-        ];
-
-        function rechercherProfessionnel() {
+        async function rechercherProfessionnel() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const results = professionnels.filter(prof => 
-                prof.metier.toLowerCase().includes(searchTerm) || prof.nom.toLowerCase().includes(searchTerm)
-            );
+            
+            try {
+                // Afficher le spinner
+                document.getElementById('loadingSpinner').classList.remove('d-none');
 
-            const resultsBody = document.getElementById('resultsBody');
-            resultsBody.innerHTML = results.map(prof => `
-                <tr>
-                    <td>${prof.nom}</td>
-                    <td>${prof.metier}</td>
-                    <td><button class="btn btn-primary" onclick="reserver('${prof.nom}')">Réserver</button></td>
-                </tr>
-            `).join('');
+                // Appeler l'API backend
+                const response = await fetch(`http://localhost:7000/search-professionals?job=${searchTerm}`);
+                const professionals = await response.json();
 
-            document.getElementById('resultsSection').classList.remove('d-none');
+                // Masquer le spinner
+                document.getElementById('loadingSpinner').classList.add('d-none');
+
+                // Afficher les résultats dans le tableau
+                const resultsBody = document.getElementById('resultsBody');
+                if (professionals.length === 0) {
+                    resultsBody.innerHTML = `
+                        <tr>
+                            <td colspan="4" class="text-center">Aucun professionnel trouvé</td>
+                        </tr>
+                    `;
+                } else {
+                    resultsBody.innerHTML = professionals.map(prof => `
+                        <tr>
+                            <td>${prof.username}</td>
+                            <td>${prof.job}</td>
+                            <td>${prof.cityAddress}</td>
+                            <td><button class="btn btn-primary" onclick="reserver('${prof.username}')">Réserver</button></td>
+                        </tr>
+                    `).join('');
+                }
+
+                // Afficher la section des résultats
+                document.getElementById('resultsSection').classList.remove('d-none');
+            } catch (error) {
+                console.error('Erreur lors de la recherche :', error);
+                alert('Une erreur est survenue lors de la recherche.');
+                document.getElementById('loadingSpinner').classList.add('d-none');
+            }
         }
 
         function reserver(nom) {
             alert(`Réservation avec ${nom} en cours...`);
-        }
-
-        function annulerRendezvous(nom, date, heure) {
-            alert(`Rendez-vous avec ${nom} le ${date} à ${heure} annulé.`);
+            // Ici, vous pouvez ajouter la logique pour réserver un rendez-vous
         }
     </script>
 
