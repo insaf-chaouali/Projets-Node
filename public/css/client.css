@@ -1,0 +1,100 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('/images/istockphoto-1001279256-612x612.jpg'); /* Remplacez par votre image */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #fff; /* Texte en blanc pour contraster avec le fond */
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: rgba(0, 123, 255, 0.8); /* Bleu semi-transparent */
+}
+
+.search-box {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #333; /* Texte sombre pour contraster avec le fond blanc */
+}
+
+.search-box h2 {
+    color: #007bff; /* Titre en bleu */
+    margin-bottom: 1rem;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-box button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.search-box button:hover {
+    background-color: #0056b3;
+}
+
+.results-section {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.9); /* Fond blanc semi-transparent */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    color: #333; /* Texte sombre pour contraster avec le fond blanc */
+}
+
+.results-section h3 {
+    color: #007bff; /* Titre en bleu */
+    margin-bottom: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#loadingSpinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.d-none {
+    display: none;
+}
