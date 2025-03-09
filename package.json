@@ -1,16 +1,27 @@
 {
+<<<<<<< HEAD
   "name": "login",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+=======
+  "name": "projet-ex",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+    
+>>>>>>> 62706e44713ae3d667830d9ddd5b8fe4e8e53674
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+<<<<<<< HEAD
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "dotenv": "^16.4.7",
@@ -19,6 +30,10 @@
     "express-session": "^1.18.1",
     "generate": "^0.14.0",
     "jsonwebtoken": "^9.0.2",
+=======
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+>>>>>>> 62706e44713ae3d667830d9ddd5b8fe4e8e53674
     "mongoose": "^8.10.1"
   }
 }
