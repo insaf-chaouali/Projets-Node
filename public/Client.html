@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Client</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-   <link rel="stylesheet" href="css/client.css">
+    <link rel="stylesheet" href="css/client.css">
 </head>
+
 <body>
     <!-- Barre de navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Rendez-vous</a>
+            <a class="navbar-brand fw-bold" href="#">Verso</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -19,92 +23,64 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#mesrendezvous">Mes Rendez-vous</a></li>
                     <li class="nav-item"><a class="nav-link" href="/profile">Profil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login.html" id="logout">Déconnexion</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Section de recherche -->
-    <div class="search-box">
-        <h2>Rechercher un professionnel</h2>
-        <input type="text" id="searchInput" placeholder="Rechercher un professionnel (ex: Médecin, Avocat)">
-        <button onclick="rechercherProfessionnel()" class="btn btn-primary mt-2">Rechercher</button>
-    </div>
-
-    <!-- Spinner de chargement -->
-    <div id="loadingSpinner" class="d-none">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Chargement...</span>
+    <!-- Contenu principal -->
+    <main class="container">
+        <!-- Section de recherche -->
+        <div class="search-box text-center">
+            <div class="input-group mx-auto" style="max-width: 600px;">
+                <input type="text" id="searchInput" class="form-control" placeholder="Ex: Médecin, Avocat">
+                <button onclick="rechercherProfessionnel()" class="btn btn-primary px-4">
+                    Rechercher
+                </button>
+            </div>
         </div>
-    </div>
 
-    <!-- Section des résultats -->
-    <div class="results-section d-none" id="resultsSection">
-        <h3>Résultats de la recherche</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Métier</th>
-                    <th>Localisation</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="resultsBody">
-                <!-- Les résultats seront injectés ici par JavaScript -->
-            </tbody>
-        </table>
-    </div>
+        <!-- Spinner de chargement -->
+        <div id="loadingSpinner" class="d-none text-center mt-4">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Chargement...</span>
+            </div>
+        </div>
 
-    <script>
-        async function rechercherProfessionnel() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
-            try {
-                // Afficher le spinner
-                document.getElementById('loadingSpinner').classList.remove('d-none');
+        <!-- Section des résultats -->
+        <div class="results-section container d-none mt-4" id="resultsSection">
+            <h3 class="text-center text-black mb-4">Résultats de la recherche</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Métier</th>
+                        <th>Localisation</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                    <!-- Les résultats seront injectés ici par JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </main>
 
-                // Appeler l'API backend
-                const response = await fetch(`http://localhost:7000/search-professionals?job=${searchTerm}`);
-                const professionals = await response.json();
+    <!-- Footer -->
+    <footer class="footer py-3 mt-auto">
+        <div class="container text-center">
+            <p class="mb-2">&copy; 2024 Rendez-vous. Tous droits réservés.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
 
-                // Masquer le spinner
-                document.getElementById('loadingSpinner').classList.add('d-none');
-
-                // Afficher les résultats dans le tableau
-                const resultsBody = document.getElementById('resultsBody');
-                if (professionals.length === 0) {
-                    resultsBody.innerHTML = `
-                        <tr>
-                            <td colspan="4" class="text-center">Aucun professionnel trouvé</td>
-                        </tr>
-                    `;
-                } else {
-                    resultsBody.innerHTML = professionals.map(prof => `
-                        <tr>
-                            <td>${prof.username}</td>
-                            <td>${prof.job}</td>
-                            <td>${prof.cityAddress}</td>
-                            <td><button class="btn btn-primary" onclick="reserver('${prof.username}')">Réserver</button></td>
-                        </tr>
-                    `).join('');
-                }
-
-                // Afficher la section des résultats
-                document.getElementById('resultsSection').classList.remove('d-none');
-            } catch (error) {
-                console.error('Erreur lors de la recherche :', error);
-                alert('Une erreur est survenue lors de la recherche.');
-                document.getElementById('loadingSpinner').classList.add('d-none');
-            }
-        }
-
-        function reserver(nom) {
-            alert(`Réservation avec ${nom} en cours...`);
-            // Ici, vous pouvez ajouter la logique pour réserver un rendez-vous
-        }
-    </script>
-
+    <script src="js/clients.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
