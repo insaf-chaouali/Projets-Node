@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
+<<<<<<< HEAD
     <link rel="stylesheet" href="css/signup.css">
 </head>
 <body>
@@ -14,6 +15,13 @@
     
     <div class="container">
         <form id="signupForm" class="signup-form">
+=======
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <form action="/signup" method="POST">
+>>>>>>> f5691eee773ef1842a3355dfd579b889415f3e52
             <div class="form-group">
                 <label for="username">Nom d'utilisateur :</label>
                 <input type="text" name="username" id="username" placeholder="Entrez votre nom d'utilisateur" required autocomplete="off">
@@ -36,9 +44,16 @@
             </div>
             <div class="form-group d-none" id="jobField">
                 <label for="job">Job :</label>
+<<<<<<< HEAD
                 <select id="job" name="job">
                     <option value="doctor">Doctor</option>
                     <option value="lawyer">Lawyer</option>
+=======
+                <select id="job" name="job" class="form-select">
+                    <option value="doctor">Doctor</option>
+                    <option value="lawyer">Lawyer</option>
+                    <!-- Add more job options as needed -->
+>>>>>>> f5691eee773ef1842a3355dfd579b889415f3e52
                 </select>
             </div>
             <div class="form-group">
@@ -55,6 +70,7 @@
             </div>
             <button type="submit" class="submit-btn">Inscription</button>
         </form>
+<<<<<<< HEAD
         <p id="error-message" style="color: red; margin-top: 10px;"></p>
     </div>
 
@@ -62,3 +78,10 @@
 
 </body>
 </html>
+=======
+        <p>Déjà un compte ? <a href="login.html">Connectez-vous</a></p>
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+</html>
+>>>>>>> f5691eee773ef1842a3355dfd579b889415f3e52
