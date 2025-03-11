@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="gestion_clients.html">Gestion Clients</a></li>
+            <li><a href="gestion_professionnels.html">Gestion Professionnels</a></li>
+        </ul>
+    </nav>
+    
+    <section class="stats">
+        <div class="stat-box">Clients: <span id="clientCount"></span></div>
+        <div class="stat-box">Professionnels: <span id="proCount"></span></div>
+        <div class="stat-box">Réservations: <span id="reservationCount"></span></div>
+    </section>
+
+    <canvas id="doughnutChart"></canvas>
+    <canvas id="lineChart"></canvas>
+    
+    
+    <script src="./js/dashboard.js"></script>
+</body>
+</html>
