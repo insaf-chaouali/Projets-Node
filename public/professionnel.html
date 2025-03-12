@@ -5,21 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espace Professionnel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/professionnel.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <!-- Barre de navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Rendez-vous</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <a class="navbar-brand fw-bold" href="#">Verso</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Mes Rendez-vous</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Profil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login.html" id="logout">Déconnexion</a></li>
                 </ul>
             </div>
         </div>
@@ -31,38 +33,25 @@
         <form id="profileForm">
             <div class="mb-3">
                 <label class="form-label">Nom :</label>
-                <input type="text" class="form-control" id="name" value="Dr. Dupont">
+                <input type="text" class="form-control" id="name" value="Dr. Dupont" readonly>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email :</label>
+                <input type="email" class="form-control" id="email" value="dr.dupont@example.com" readonly>
             </div>
             <div class="mb-3">
                 <label class="form-label">Métier :</label>
-                <input type="text" class="form-control" id="job" value="Médecin généraliste">
+                <input type="text" class="form-control" id="job" value="Médecin généraliste" readonly>
             </div>
             <div class="mb-3">
                 <label class="form-label">Localisation :</label>
-                <input type="text" class="form-control" id="location" value="Paris, France">
+                <input type="text" class="form-control" id="location" value="Paris, France" readonly>
             </div>
-            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+            <button type="button" id="editProfileBtn" class="btn btn-primary">Modifier le profil</button>
+            <button type="submit" id="saveProfileBtn" class="btn btn-success d-none">Enregistrer</button>
         </form>
     </div>
 
-    <!-- Section Disponibilités -->
-    <div class="container mt-5">
-        <h2>Mes Disponibilités</h2>
-        <form id="availabilityForm">
-            <div class="mb-3">
-                <label class="form-label">Date :</label>
-                <input type="date" class="form-control" id="date">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Heure :</label>
-                <input type="time" class="form-control" id="time">
-            </div>
-            <button type="submit" class="btn btn-success">Ajouter Disponibilité</button>
-        </form>
-        <ul id="availabilityList" class="list-group mt-3">
-            <!-- Les créneaux seront affichés ici -->
-        </ul>
-    </div>
 
     <!-- Section Rendez-vous -->
     <div class="container mt-5">
@@ -90,6 +79,8 @@
             </tbody>
         </table>
     </div>
+
+
 
     <script src="js/professionnel.js"></script>
 </body>

@@ -102,10 +102,95 @@ router.get('/me', isAuthenticated, async (req, res) => {
             email: user.email,
             role: user.role,
             cityAddress: user.cityAddress,
-            job: user.job
+            job: user.job,
+            dateOfBirth:user.dateOfBirth,
+            status:user.status,
+            city:user.city
+        
         });
     } catch (error) {
         res.status(500).json({ message: 'Erreur serveur' });
+    }
+});
+router.put('/update', isAuthenticated, async (req, res) => {
+    try {
+        const { username, email, city, status, cityAddress, job } = req.body;
+        const userId = req.user.id;
+
+        // Validation des données (optionnel)
+        if (!username || !email) {
+            return res.status(400).json({ message: "Nom d'utilisateur et email sont requis" });
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { username, email, city, status, cityAddress, job },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(400).json({ message: "Erreur de mise à jour" });
+        }
+
+        res.json({ message: "Profil mis à jour avec succès", user: updatedUser });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+});
+router.get('/profile/:id', async (req, res) => {
+    try {
+        const client = await Client.findById(req.params.id);
+        if (!client) {
+            return res.status(404).json({ message: "Client non trouvé" });
+        }
+        res.json(client);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+router.get('/Professionnel', isAuthenticated, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id);
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur serveur' });
+    }
+});
+
+router.put('/Update', isAuthenticated, async (req, res) => {
+    try {
+        const { username, job, cityAddress } = req.body;
+        const userId = req.user.id;
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { username, job, cityAddress },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(400).json({ message: "Erreur de mise à jour" });
+        }
+
+        res.json({ message: "Profil mis à jour avec succès", user: updatedUser });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur serveur" });
+    }
+});
+
+router.post('/availability', isAuthenticated, async (req, res) => {
+    try {
+        const { date, time } = req.body;
+        const userId = req.user.id;
+
+        // Ajoutez la logique pour enregistrer la disponibilité dans la base de données
+
+        res.json({ message: "Disponibilité ajoutée avec succès" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur serveur" });
     }
 });
 

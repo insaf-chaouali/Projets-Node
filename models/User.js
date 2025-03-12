@@ -40,6 +40,9 @@ const userSchema = new mongoose.Schema({
     },
     job: { 
         type: String 
+    },
+    city:{
+        type : String
     }
 });
 

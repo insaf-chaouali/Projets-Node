@@ -1,4 +1,6 @@
-   // Définition de rechercherProfessionnel
+const socket = io();
+
+// Définition de rechercherProfessionnel
    const rechercherProfessionnel = async () => {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
     try {
@@ -32,9 +34,22 @@
     }
 };
 
-function reserver(nom) {
-    alert(`Réservation avec ${nom} en cours...`);
+function reserver(professionnelName) {
+  const data = {
+    clientName: localStorage.getItem('username'), // Assurez-vous que le nom du client est stocké dans le localStorage
+    professionnelName: professionnelName,
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString()
+  };
+  socket.emit("reservation", data);
 }
+
+// Recevoir la réponse du professionnel
+socket.on("maj_rendezvous", (data) => {
+  if (data.clientId === localStorage.getItem('userId')) { // Assurez-vous que l'ID du client est stocké dans le localStorage
+    alert(`Votre réservation a été ${data.reponse} par ${data.professionnelName}`);
+  }
+});
 
 document.addEventListener("DOMContentLoaded", () => {
 document.querySelector("button").addEventListener("click", rechercherProfessionnel);
