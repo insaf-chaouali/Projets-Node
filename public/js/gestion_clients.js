@@ -1,0 +1,71 @@
+document.addEventListener("DOMContentLoaded", function () {
+    fetchClients();
+
+    // Ajout d'un écouteur d'événements pour la recherche
+    document.getElementById("searchClient").addEventListener("input", function () {
+        const searchValue = this.value.toLowerCase();
+        filterClients(searchValue);
+    });
+});
+
+//  1. Récupérer la liste des clients depuis l'API
+function fetchClients() {
+    fetch("/api/clients")
+        .then(response => response.json())
+        .then(data => {
+            displayClients(data);
+        })
+        .catch(error => console.error("Erreur lors du chargement des clients:", error));
+}
+
+//  2. Afficher les clients dans le tableau
+function displayClients(clients) {
+    const tbody = document.getElementById("clientTableBody");
+    tbody.innerHTML = ""; // Réinitialiser le tableau
+
+    clients.forEach(client => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${client.username}</td>
+            <td>${client.email}</td>
+            <td>${client.cityAddress}</td>
+            <td>
+                <button class="delete-btn" onclick="deleteClient(${client.id})">Supprimer</button>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+//  3. Fonction de recherche dynamique
+function filterClients(searchValue) {
+    const rows = document.querySelectorAll("#clientTableBody tr");
+
+    rows.forEach(row => {
+        const name = row.children[0].textContent.toLowerCase();
+        const address = row.children[2].textContent.toLowerCase();
+
+        if (name.includes(searchValue) || address.includes(searchValue)) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+//  4. Supprimer un client
+function deleteClient(clientId) {
+    if (confirm("Voulez-vous vraiment supprimer ce client ?")) {
+        fetch(`/api/clients/${clientId}`, {
+            method: "DELETE",
+        })
+        .then(response => {
+            if (response.ok) {
+                fetchClients(); // Recharger la liste après suppression
+            } else {
+                console.error("Erreur lors de la suppression du client.");
+            }
+        })
+        .catch(error => console.error("Erreur lors de la suppression:", error));
+    }
+}
