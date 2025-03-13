@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 document.addEventListener('DOMContentLoaded', async () => {
     // Chargement des données utilisateur
     const token = localStorage.getItem('token');
@@ -94,6 +95,8 @@ document.getElementById('profileForm').addEventListener('submit', async function
     }
 });
 
+=======
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b
 document.getElementById("availabilityForm").addEventListener("submit", function (event) {
     event.preventDefault();
     const date = document.getElementById("date").value;
@@ -109,6 +112,7 @@ document.getElementById("availabilityForm").addEventListener("submit", function 
     newItem.classList.add("list-group-item");
     newItem.innerHTML = `${date} à ${time} <button class="btn btn-danger btn-sm float-end" onclick="removeSlot(this)">Supprimer</button>`;
     list.appendChild(newItem);
+<<<<<<< HEAD
 
     // Enregistrer la disponibilité dans la base de données
     const token = localStorage.getItem('token');
@@ -120,11 +124,14 @@ document.getElementById("availabilityForm").addEventListener("submit", function 
         },
         body: JSON.stringify({ date, time })
     }).catch(error => console.error('Erreur:', error));
+=======
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b
 });
 
 function removeSlot(button) {
     button.parentElement.remove();
 }
+<<<<<<< HEAD
 // Déconnexion
 document.getElementById('logout').addEventListener('click', () => {
     localStorage.removeItem('token');
@@ -160,3 +167,5 @@ function repondreReservation(clientId, reponse) {
   };
   socket.emit("reponse_professionnel", data);
 }
+=======
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b

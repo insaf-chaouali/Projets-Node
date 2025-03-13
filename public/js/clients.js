@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 const socket = io();
 
 // Définition de rechercherProfessionnel
+=======
+   // Définition de rechercherProfessionnel
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b
    const rechercherProfessionnel = async () => {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
     try {
@@ -34,6 +38,7 @@ const socket = io();
     }
 };
 
+<<<<<<< HEAD
 function reserver(professionnelName) {
   const data = {
     clientName: localStorage.getItem('username'), // Assurez-vous que le nom du client est stocké dans le localStorage
@@ -51,6 +56,12 @@ socket.on("maj_rendezvous", (data) => {
   }
 });
 
+=======
+function reserver(nom) {
+    alert(`Réservation avec ${nom} en cours...`);
+}
+
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b
 document.addEventListener("DOMContentLoaded", () => {
 document.querySelector("button").addEventListener("click", rechercherProfessionnel);
 });

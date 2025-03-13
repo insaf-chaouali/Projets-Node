@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -32,3 +33,6 @@ app.get("/api/clients", (req, res) => res.json(clients));
 app.get("/api/professionnels", (req, res) => res.json(professionnels));
 
 app.listen(port, () => console.log(`Serveur démarré sur http://localhost:${port}`));
+=======
+
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b

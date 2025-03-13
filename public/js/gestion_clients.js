@@ -26,9 +26,21 @@ function displayClients(clients) {
     clients.forEach(client => {
         const row = document.createElement("tr");
         row.innerHTML = `
+<<<<<<< HEAD
             <td>${client.username}</td>
             <td>${client.email}</td>
             <td>${client.cityAddress}</td>
+=======
+<<<<<<< HEAD
+            <td>${client.username}</td>
+            <td>${client.email}</td>
+            <td>${client.cityAddress}</td>
+=======
+            <td>${client.nom}</td>
+            <td>${client.email}</td>
+            <td>${client.adresse}</td>
+>>>>>>> f5691eee773ef1842a3355dfd579b889415f3e52
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b
             <td>
                 <button class="delete-btn" onclick="deleteClient(${client.id})">Supprimer</button>
             </td>
@@ -68,4 +80,8 @@ function deleteClient(clientId) {
         })
         .catch(error => console.error("Erreur lors de la suppression:", error));
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b

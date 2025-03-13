@@ -102,16 +102,21 @@ router.get('/me', isAuthenticated, async (req, res) => {
             email: user.email,
             role: user.role,
             cityAddress: user.cityAddress,
+<<<<<<< HEAD
             job: user.job,
             dateOfBirth:user.dateOfBirth,
             status:user.status,
             city:user.city
         
+=======
+            job: user.job
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b
         });
     } catch (error) {
         res.status(500).json({ message: 'Erreur serveur' });
     }
 });
+<<<<<<< HEAD
 router.put('/update', isAuthenticated, async (req, res) => {
     try {
         const { username, email, city, status, cityAddress, job } = req.body;
@@ -193,5 +198,7 @@ router.post('/availability', isAuthenticated, async (req, res) => {
         res.status(500).json({ message: "Erreur serveur" });
     }
 });
+=======
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b
 
 module.exports = router;

@@ -20,13 +20,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('username').textContent = user.username;
         document.getElementById('email').textContent = user.email;
         document.getElementById('city').textContent = user.cityAddress;
+<<<<<<< HEAD
         document.getElementById('dateOfBirth').textContent=user.dateOfBirth;
+=======
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b
 
     } catch (error) {
         console.error('Erreur:', error);
         window.location.href = '/login.html';
     }
 
+<<<<<<< HEAD
    document.getElementById('editProfileForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
@@ -72,6 +76,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+=======
+    // Gestion de l'avatar
+    const avatarPreview = document.getElementById('avatar-preview');
+    const avatarUpload = document.getElementById('avatar-upload');
+
+    avatarPreview.addEventListener('click', () => avatarUpload.click());
+
+    avatarUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                avatarPreview.src = e.target.result;
+                // Ici vous pouvez ajouter l'envoi au serveur
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b
 
     // Déconnexion
     document.getElementById('logout').addEventListener('click', () => {

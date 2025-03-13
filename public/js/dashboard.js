@@ -71,4 +71,8 @@ function renderLineChart(data) {
             }]
         }
     });
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> eeebb862438e97a1348f32c41a0db4a94f65407b
