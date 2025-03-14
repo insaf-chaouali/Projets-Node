@@ -53,6 +53,7 @@
     </div>
 
 
+
     <!-- Section Rendez-vous -->
     <div class="container mt-5">
         <h2>Mes Rendez-vous</h2>
@@ -67,21 +68,51 @@
             </thead>
             <tbody id="appointmentList">
                 <tr>
-                    <td>Jean Martin</td>
-                    <td>10/03/2025</td>
-                    <td>14:00</td>
-                    <td>
-                        <button class="btn btn-success">Accepter</button>
-                        <button class="btn btn-danger">Annuler</button>
-                    </td>
+    
                 </tr>
                 <!-- D'autres rendez-vous seront affichés ici -->
             </tbody>
         </table>
+    <!--<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const socket = io();
+
+            // Listen for new appointments from the server
+            socket.on('newAppointment', function(appointment) {
+                const appointmentList = document.getElementById('appointmentList');
+                const newRow = document.createElement('tr');
+
+                // Populate the new row with appointment details
+                newRow.innerHTML = `
+                    <td>${appointment.client}</td>
+                    <td>${appointment.date}</td>
+                    <td>${appointment.time}</td>
+                    <td>
+                        <button class="btn btn-success accept-btn">Accepter</button>
+                        <button class="btn btn-danger cancel-btn">Annuler</button>
+                    </td>
+                `;
+
+                // Append the new row to the appointment list
+                appointmentList.appendChild(newRow);
+
+                // Add event listeners for the action buttons
+                newRow.querySelector('.accept-btn').addEventListener('click', function() {
+                    socket.emit('acceptAppointment', appointment.id);
+                    alert('Rendez-vous accepté.');
+                });
+
+                newRow.querySelector('.cancel-btn').addEventListener('click', function() {
+                    socket.emit('cancelAppointment', appointment.id);
+                    newRow.remove();
+                    alert('Rendez-vous annulé.');
+                });
+            });
+        });
+    </script> -->
     </div>
-
-
-
+    <!--<script src="/socket.io/socket.io.js"></script>-->
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script src="js/professionnel.js"></script>
 </body>
 

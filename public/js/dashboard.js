@@ -72,3 +72,10 @@ function renderLineChart(data) {
         }
     });
 }
+// Déconnexion
+document.getElementById('logout').addEventListener('click', () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userId');
+    window.location.href = '/login.html';
+});

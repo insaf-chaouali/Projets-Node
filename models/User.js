@@ -33,11 +33,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'Non spécifié'
     },
-    role: { 
-        type: String, 
-        enum: ['admin', 'client', 'professionnel'], 
-        required: true 
-    },
     job: { 
         type: String 
     },

@@ -3,19 +3,25 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    const response = await fetch('auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-    });
+    try {
+        const response = await fetch('auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
 
-    const result = await response.json();
-    if (response.ok) {
-        const token = result.token;
-        
-        localStorage.setItem('token', token); // Stockez le token dans le localStorage
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Login failed');
+        }
+
+        // Store token, clientName, and userId in the local storage
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('username', result.username);
+        localStorage.setItem('userId', result.userId);
+
         const role = result.role;
         if (role === 'admin') {
             window.location.href = '/admin';
@@ -26,9 +32,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         } else {
             window.location.href = '/profile';
         }
-    } else {
-        const params = new URLSearchParams(window.location.search);
-        if (params.has('error')) {
-            document.getElementById('error-message').innerText = params.get('error');
-    }}
+    } catch (error) {
+        console.error('Error during login:', error);
+        alert(error.message || 'Login failed');
+    }
 });

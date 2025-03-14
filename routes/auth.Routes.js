@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User'); 
 const isAuthenticated = require('../middleware/isAuthenticated');
 require('dotenv').config();
-
 // Route pour l'inscription
 router.post("/signup", async (req, res) => {
     try {
@@ -140,11 +139,18 @@ router.put('/update', isAuthenticated, async (req, res) => {
 });
 router.get('/profile/:id', async (req, res) => {
     try {
-        const client = await Client.findById(req.params.id);
-        if (!client) {
-            return res.status(404).json({ message: "Client non trouvé" });
+        const { id } = req.params;
+        
+        // Validate ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "ID invalide" });
         }
-        res.json(client);
+
+        const user = await User.findById(id); // Remplacer Client par User
+        if (!user) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+        res.json(user);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -193,5 +199,7 @@ router.post('/availability', isAuthenticated, async (req, res) => {
         res.status(500).json({ message: "Erreur serveur" });
     }
 });
+
+
 
 module.exports = router;
